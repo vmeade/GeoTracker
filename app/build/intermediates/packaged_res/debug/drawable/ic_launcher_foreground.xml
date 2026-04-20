@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Location pin -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,20 C44,20 36,28 36,38 C36,52 54,72 54,72 C54,72 72,52 72,38 C72,28 64,20 54,20 Z M54,44 C50.7,44 48,41.3 48,38 C48,34.7 50.7,32 54,32 C57.3,32 60,34.7 60,38 C60,41.3 57.3,44 54,44 Z"/>
+    <!-- Route line suggestion -->
+    <path
+        android:strokeColor="#BBDEFB"
+        android:strokeWidth="3"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M30,78 Q54,65 78,78"/>
+</vector>

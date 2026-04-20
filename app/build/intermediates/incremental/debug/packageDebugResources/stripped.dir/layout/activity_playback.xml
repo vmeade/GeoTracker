@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000">
+
+    <!-- Map + floating HUD -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <org.osmdroid.views.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <!-- Journey name pill – top-left, floating over map -->
+        <TextView
+            android:id="@+id/tvJourneyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:layout_margin="10dp"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp"
+            android:background="#CC0A1628"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:maxWidth="200dp"/>
+
+        <!-- Bottom HUD: status + live data, overlaid on map -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:background="#E8050A14"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="10dp">
+
+            <!-- Wind fetch status -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="4dp">
+
+                <ProgressBar
+                    android:id="@+id/progressWind"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginEnd="7dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tvWindStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:textColor="#66899FC4"
+                    android:text="Initialising…"/>
+
+            </LinearLayout>
+
+            <!-- Live data: wind info + boat speed -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvWindInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#90CAF9"
+                    android:text="Wind: —"/>
+
+                <TextView
+                    android:id="@+id/tvBoatSpeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#80CBC4"
+                    android:text="Boat: —"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!-- Layer chips + controls (light panel below map) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/surface">
+
+        <!-- Layer toggle chips -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp">
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipSpacingHorizontal="6dp"
+                app:singleLine="true"
+                app:selectionRequired="false">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cbRoute"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Route"
+                    android:checked="true"
+                    android:textSize="12sp"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cbTrail"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trail"
+                    android:checked="true"
+                    android:textSize="12sp"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cbWind"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wind Inst."
+                    android:checked="true"
+                    android:textSize="12sp"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/cbWindField"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wind Flow"
+                    android:checked="true"
+                    android:textSize="12sp"/>
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </HorizontalScrollView>
+
+        <!-- Thin divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginHorizontal="12dp"/>
+
+        <!-- Playback controls -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="14dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="12dp">
+
+            <!-- Seek bar + elapsed -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="1000"/>
+
+                <TextView
+                    android:id="@+id/tvPlaybackTime"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:fontFamily="monospace"
+                    android:textColor="@color/textSecondary"
+                    android:gravity="end"
+                    android:text="+00:00:00"/>
+
+            </LinearLayout>
+
+            <!-- Buttons + speed -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="6dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPlayPause"
+                    android:layout_width="52dp"
+                    android:layout_height="44dp"
+                    android:text="&#9654;"
+                    android:textSize="18sp"
+                    android:padding="0dp"
+                    app:cornerRadius="10dp"
+                    app:backgroundTint="@color/primary"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRestart"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:text="&#9198;"
+                    android:textSize="16sp"
+                    android:padding="0dp"
+                    android:layout_marginStart="8dp"
+                    app:cornerRadius="10dp"
+                    android:textColor="@color/primary"
+                    app:backgroundTint="@android:color/transparent"
+                    app:strokeColor="@color/divider"
+                    app:strokeWidth="1dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Speed"
+                    android:textSize="12sp"
+                    android:textColor="@color/textSecondary"
+                    android:layout_marginEnd="6dp"/>
+
+                <Spinner
+                    android:id="@+id/spinnerSpeed"
+                    android:layout_width="76dp"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

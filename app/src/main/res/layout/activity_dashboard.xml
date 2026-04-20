@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <!-- Summary bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/primary"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <TextView
+            android:id="@+id/tvSummaryCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0 journeys"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/tvSummaryDist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0.0 km total"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tvSummaryBest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Best: 0 km/h"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:gravity="end"/>
+
+    </LinearLayout>
+
+    <!-- Empty state -->
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="32dp"
+        android:text="No journeys yet.\nTap Start Journey on the home screen!"
+        android:textColor="@color/textSecondary"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:visibility="gone"/>
+
+    <!-- Journey list -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingVertical="8dp"/>
+
+</LinearLayout>

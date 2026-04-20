@@ -1,0 +1,70 @@
+[
+    {
+        "merged": "com.geotracker.app-merged_res-43:/layout_activity_main.xml.flat",
+        "source": "com.geotracker.app-main-45:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/drawable_ic_launcher_background.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.geotracker.app-merged_res-43:/layout_activity_playback.xml.flat",
+        "source": "com.geotracker.app-main-45:/layout/activity_playback.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/layout_activity_playback.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/layout/activity_playback.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/layout_activity_main.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/layout_activity_dashboard.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/layout/activity_dashboard.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/menu_menu_journey_detail.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/menu/menu_journey_detail.xml"
+    },
+    {
+        "merged": "com.geotracker.app-merged_res-43:/layout_item_journey.xml.flat",
+        "source": "com.geotracker.app-main-45:/layout/item_journey.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/menu_menu_dashboard.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/menu/menu_dashboard.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/xml_file_paths.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/xml/file_paths.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/layout_item_journey.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/layout/item_journey.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/layout_activity_tracking.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/layout/activity_tracking.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/layout_activity_journey_detail.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/layout/activity_journey_detail.xml"
+    },
+    {
+        "merged": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-merged_res-43:/drawable_ic_notification.xml.flat",
+        "source": "/home/droid/.gradle/daemon/8.6/com.geotracker.app-main-45:/drawable/ic_notification.xml"
+    }
+]

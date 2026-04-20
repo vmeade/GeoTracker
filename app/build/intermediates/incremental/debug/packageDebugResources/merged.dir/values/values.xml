@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#00897B</color>
+    <color name="background">#F0F4F8</color>
+    <color name="divider">#DDE3EC</color>
+    <color name="hero">#0A1628</color>
+    <color name="heroCard">#111E33</color>
+    <color name="orange">#EF6C00</color>
+    <color name="primary">#1565C0</color>
+    <color name="primaryDark">#003c8f</color>
+    <color name="primaryLight">#BBDEFB</color>
+    <color name="red">#C62828</color>
+    <color name="sailGold">#FFB300</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="textOnHero">#E8F4FD</color>
+    <color name="textOnHeroSub">#7BADC9</color>
+    <color name="textPrimary">#1A1F2E</color>
+    <color name="textSecondary">#6B7A99</color>
+    <color name="windBlue">#4FC3F7</color>
+    <string name="app_name">GeoTracker</string>
+    <style name="Theme.GeoTracker" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primaryDark</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="android:statusBarColor">@color/primaryDark</item>
+    </style>
+</resources>
