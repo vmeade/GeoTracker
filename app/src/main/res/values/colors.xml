@@ -18,9 +18,9 @@
 
     <!-- Text -->
     <color name="textPrimary">#1A1F2E</color>
-    <color name="textSecondary">#6B7A99</color>
+    <color name="textSecondary">#4A5670</color>
     <color name="textOnHero">#E8F4FD</color>
-    <color name="textOnHeroSub">#7BADC9</color>
+    <color name="textOnHeroSub">#A8CCE4</color>
 
     <color name="divider">#DDE3EC</color>
 </resources>

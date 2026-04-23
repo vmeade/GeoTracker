@@ -29,9 +29,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Track. Replay. Sail."
-            android:textSize="13sp"
+            android:textSize="15sp"
             android:textColor="@color/textOnHeroSub"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="24dp"/>
 
         <!-- Stats strip inside hero -->
@@ -60,7 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="journeys"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:textColor="@color/textOnHeroSub"/>
             </LinearLayout>
 
@@ -84,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="total distance"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:textColor="@color/textOnHeroSub"/>
             </LinearLayout>
 
@@ -107,7 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="best km/h"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:textColor="@color/textOnHeroSub"/>
             </LinearLayout>
 

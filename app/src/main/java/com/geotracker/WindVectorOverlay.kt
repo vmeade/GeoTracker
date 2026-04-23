@@ -34,9 +34,13 @@ class WindVectorOverlay(private val mapView: MapView) : Overlay() {
     private val handler = Handler(Looper.getMainLooper())
     private val animRunnable = object : Runnable {
         override fun run() {
-            if (showField && windSpeedMs > 0.1f) {
-                tick()
-                mapView.invalidate()
+            try {
+                if (showField && windSpeedMs > 0.1f) {
+                    tick()
+                    mapView.invalidate()
+                }
+            } catch (_: Throwable) {
+                // Never let an animation tick kill the main looper
             }
             handler.postDelayed(this, 32L)   // ~30 fps
         }
@@ -109,6 +113,10 @@ class WindVectorOverlay(private val mapView: MapView) : Overlay() {
         val dx = sin(goingRad).toFloat() * pxMs * dt
         val dy = -cos(goingRad).toFloat() * pxMs * dt
 
+        // Mutating `particles` inside the iterator (add after remove) throws
+        // ConcurrentModificationException. Count expired slots, then refill
+        // in a second pass.
+        var recycle = 0
         val iter = particles.iterator()
         while (iter.hasNext()) {
             val p = iter.next()
@@ -118,10 +126,12 @@ class WindVectorOverlay(private val mapView: MapView) : Overlay() {
             val gone = p.x < -60 || p.x > canvasW + 60 ||
                        p.y < -60 || p.y > canvasH + 60 ||
                        p.age >= p.maxAge
-            if (gone) { iter.remove(); particles.add(spawn()) }
+            if (gone) { iter.remove(); recycle++ }
         }
+        repeat(recycle) { particles.add(spawn()) }
+
         val target = (canvasW * canvasH / 6500).coerceIn(90, 200)
-        repeat(target - particles.size) { if (particles.size < target) particles.add(spawn()) }
+        repeat((target - particles.size).coerceAtLeast(0)) { particles.add(spawn()) }
     }
 
     private fun spawn(): Particle {
@@ -143,7 +153,7 @@ class WindVectorOverlay(private val mapView: MapView) : Overlay() {
 
             if (showField && windSpeedMs > 0.1f) drawParticles(canvas, color)
             if (showCurrentArrow)                drawInstrument(canvas, color)
-        } catch (_: Exception) {
+        } catch (_: Throwable) {
             // Never let a drawing error crash the activity
         }
     }
@@ -170,8 +180,8 @@ class WindVectorOverlay(private val mapView: MapView) : Overlay() {
     // ── instrument panel ─────────────────────────────────────────────────────
     private fun drawInstrument(canvas: Canvas, accentColor: Int) {
         val margin = dp * 10f
-        val pW = dp * 100f
-        val pH = dp * 130f
+        val pW = dp * 112f
+        val pH = dp * 146f
         val left = canvasW - pW - margin
         val top  = margin
 
@@ -226,8 +236,8 @@ class WindVectorOverlay(private val mapView: MapView) : Overlay() {
         canvas.drawCircle(cx, cCy, cR, strokePaint)
 
         // ── cardinal labels ──
-        textSmall.textSize  = dp * 8f
-        textSmall.color     = Color.argb(160, 160, 200, 255)
+        textSmall.textSize  = dp * 10f
+        textSmall.color     = Color.argb(220, 200, 225, 255)
         val cardLabels = arrayOf("N", "E", "S", "W")
         val cardRads   = doubleArrayOf(0.0, Math.PI/2, Math.PI, 3*Math.PI/2)
         val lr = cR * 0.52f
@@ -281,25 +291,27 @@ class WindVectorOverlay(private val mapView: MapView) : Overlay() {
 
         // ── speed (large) ──
         val knots = windSpeedMs * 1.944f
-        textBig.textSize = dp * 20f
+        textBig.textSize = dp * 26f
         textBig.color    = Color.WHITE
-        canvas.drawText("%.1f".format(knots), cx, top + pH - dp * 71f, textBig)
+        canvas.drawText("%.1f".format(knots), cx, top + pH - dp * 78f, textBig)
 
-        textSmall.textSize = dp * 8.5f
-        textSmall.color    = Color.argb(160, 160, 200, 255)
-        canvas.drawText("KNOTS", cx, top + pH - dp * 58f, textSmall)
+        textSmall.textSize = dp * 10f
+        textSmall.color    = Color.argb(220, 200, 225, 255)
+        textSmall.letterSpacing = 0.15f
+        canvas.drawText("KNOTS", cx, top + pH - dp * 62f, textSmall)
+        textSmall.letterSpacing = 0f
 
         // ── cardinal + Beaufort ──
-        textMid.textSize = dp * 10.5f
+        textMid.textSize = dp * 13f
         textMid.color    = accentColor
-        textMid.alpha    = 230
+        textMid.alpha    = 255
         canvas.drawText("%s  Bf %d".format(toCardinal(windDirectionDeg), bf),
-            cx, top + pH - dp * 40f, textMid)
+            cx, top + pH - dp * 42f, textMid)
 
         // ── gust (if notable) ──
         if (windGustsMs > windSpeedMs + 0.8f) {
-            textSmall.textSize = dp * 8f
-            textSmall.color    = Color.argb(170, 255, 200, 130)
+            textSmall.textSize = dp * 10f
+            textSmall.color    = Color.argb(230, 255, 210, 140)
             canvas.drawText("G %.1f kt".format(windGustsMs * 1.944f),
                 cx, top + pH - dp * 24f, textSmall)
         }

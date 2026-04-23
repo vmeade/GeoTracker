@@ -82,8 +82,9 @@ class PlaybackActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val journey = db.journeyDao().getJourneyById(journeyId)
                 ?: run { finish(); return@launch }
-            val points = db.trackPointDao().getPointsForJourney(journeyId)
-            trackPoints = points
+            val rawPoints = db.trackPointDao().getPointsForJourney(journeyId)
+            val points    = scrubOutliers(rawPoints)
+            trackPoints   = points
 
             // Derive duration from points if endTime was not properly saved
             journeyDurationMs = when {
@@ -283,6 +284,53 @@ class PlaybackActivity : AppCompatActivity() {
         } catch (e: Exception) {
             // swallow any OSMDroid rendering errors silently
         }
+    }
+
+    // Drop random GPS spikes. Two passes:
+    //   1) Discard readings with poor accuracy (> 50 m).
+    //   2) Discard points whose implied speed to BOTH neighbours exceeds
+    //      ~35 m/s (~126 km/h) — isolated jumps well off-course. Using
+    //      both-sides avoids dropping legitimate high-speed runs.
+    private fun scrubOutliers(pts: List<TrackPoint>): List<TrackPoint> {
+        if (pts.size < 3) return pts
+        val accFiltered = pts.filter { it.accuracy <= 0f || it.accuracy <= 50f }
+        if (accFiltered.size < 3) return accFiltered
+
+        val maxSpeedMs = 35f
+        val kept = ArrayList<TrackPoint>(accFiltered.size)
+        kept.add(accFiltered.first())
+        for (i in 1 until accFiltered.size - 1) {
+            val prev = kept.last()
+            val curr = accFiltered[i]
+            val next = accFiltered[i + 1]
+
+            val dtPrev = (curr.timestamp - prev.timestamp) / 1000f
+            val dtNext = (next.timestamp - curr.timestamp) / 1000f
+            val dPrev  = haversineMeters(prev.latitude, prev.longitude, curr.latitude, curr.longitude)
+            val dNext  = haversineMeters(curr.latitude, curr.longitude, next.latitude, next.longitude)
+
+            val vPrev = if (dtPrev > 0.1f) dPrev / dtPrev else 0f
+            val vNext = if (dtNext > 0.1f) dNext / dtNext else 0f
+
+            // Drop if going AND coming back are both impossibly fast — that's a spike.
+            if (vPrev > maxSpeedMs && vNext > maxSpeedMs) continue
+            kept.add(curr)
+        }
+        kept.add(accFiltered.last())
+        return kept
+    }
+
+    private fun haversineMeters(
+        lat1: Double, lon1: Double, lat2: Double, lon2: Double
+    ): Float {
+        val r = 6_371_000.0
+        val dLat = Math.toRadians(lat2 - lat1)
+        val dLon = Math.toRadians(lon2 - lon1)
+        val a = kotlin.math.sin(dLat / 2).let { it * it } +
+                kotlin.math.cos(Math.toRadians(lat1)) * kotlin.math.cos(Math.toRadians(lat2)) *
+                kotlin.math.sin(dLon / 2).let { it * it }
+        val c = 2 * kotlin.math.atan2(kotlin.math.sqrt(a), kotlin.math.sqrt(1 - a))
+        return (r * c).toFloat()
     }
 
     private fun interpolatePosition(targetTs: Long): GeoPoint {
